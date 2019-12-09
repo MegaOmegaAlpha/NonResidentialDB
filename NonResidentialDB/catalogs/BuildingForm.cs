@@ -13,21 +13,21 @@ using System.Windows.Forms;
 
 namespace NonResidentialDB.catalogs
 {
-    public partial class AuctionPlaceForm : Form
+    public partial class BuildingForm : Form
     {
 
         private SqlDataAdapter adapter;
         private DataSet dataSet;
-        private static String query = @"SELECT* FROM Auction_place";
-        private List<DataGridViewRow> modifiedRows; 
+        private static String query = @"SELECT* FROM Building";
+        private List<DataGridViewRow> modifiedRows;
         private bool isEdited;
 
-        public AuctionPlaceForm()
+        public BuildingForm()
         {
             InitializeComponent();
         }
 
-        private void AuctionPlaceForm_Load(object sender, EventArgs e)
+        private void Building_Load(object sender, EventArgs e)
         {
             using (SqlConnection connection = ConnectionCreator.GetConnection())
             {
@@ -43,12 +43,13 @@ namespace NonResidentialDB.catalogs
 
         private void SetNormalAttributes()
         {
-            dataGridView.Columns[0].Visible = false;
-            dataGridView.Columns[1].HeaderText = "Район";
-            dataGridView.Columns[2].HeaderText = "Улица";
-            dataGridView.Columns[3].HeaderText = "Дом";
-            dataGridView.Columns[4].HeaderText = "Индекс";
+            dataGridView.Columns[0].HeaderText = "Кадастровый номер";
+            dataGridView.Columns[1].HeaderText = "Адрес";
+            dataGridView.Columns[2].HeaderText = "Площадь";
+            dataGridView.Columns[3].HeaderText = "Количество этажей";
+            dataGridView.Columns[4].HeaderText = "Дата постройки";
             dataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridView.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
         private void addPlaceBtn_Click(object sender, EventArgs e)
@@ -57,6 +58,16 @@ namespace NonResidentialDB.catalogs
             dataSet.Tables[0].Rows.Add(newRow);
             modifiedRows.Add(dataGridView.Rows[dataGridView.Rows.Count - 1]);
             //newRows.Add(newRow);
+            isEdited = true;
+        }
+
+        private void deleteBtn_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dataGridView.SelectedRows)
+            {
+                dataGridView.Rows.Remove(row);
+                modifiedRows.Remove(row);
+            }
             isEdited = true;
         }
 
@@ -73,13 +84,11 @@ namespace NonResidentialDB.catalogs
                         SqlCommandBuilder commandBuilder = new SqlCommandBuilder(adapter);
                         adapter.Update(dataSet);
                     }
-                    catch(SqlException exception)
+                    catch (SqlException exception)
                     {
                         if (exception.Number == 2627)
                         {
-                            dataSet.Clear();
-                            adapter.Fill(dataSet);
-                            MessageBox.Show("Комбинация значений колонок \"Улица\" и \"Номер дома\" не должна повторяться",
+                            MessageBox.Show(exception.Message,
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         if (exception.Number == 515)
@@ -96,30 +105,37 @@ namespace NonResidentialDB.catalogs
                         {
                             dataSet.Clear();
                             adapter.Fill(dataSet);
-                            MessageBox.Show("В базе имеются записи, ссылающиеся на данную. Удаление невозможно.",
+                            MessageBox.Show("В базе имеются записи, ссылающиеся на данную. Удаление записи и изменение кадастрового номера невозможно.",
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                    }                   
+                    }
                 }
                 isEdited = false;                
             }
             else
             {
-                MessageBox.Show("Индекс должен содержать 6 цифр", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Кадастровый номер должен соответствовать шаблону ХХ:ХХ:ХХХХХХХ:ХХХ", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             modifiedRows.Clear();
         }
 
-        private void deleteBtn_Click(object sender, EventArgs e)
+        private bool AreNewRowsValid()
         {
-            foreach (DataGridViewRow row in dataGridView.SelectedRows)
+            bool isOk = true;
+            foreach (DataGridViewRow row in modifiedRows)
             {
-                dataGridView.Rows.Remove(row);
+                String actualCadastral = row.Cells[0].Value.ToString();
+                Regex regex = new Regex(@"^[1-9]{1}[0-9]{1}[:][1-9]{1}[0-9]{1}[:][1-9]{1}[0-9]{6}[:][1-9]{1}[0-9]{2}$");
+                if (!regex.IsMatch(actualCadastral))
+                {
+                    isOk = false;
+                    row.Selected = true;
+                }
             }
-            isEdited = true;
+            return isOk;
         }
 
-        private void AuctionPlaceForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void Building_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isEdited)
             {
@@ -132,34 +148,7 @@ namespace NonResidentialDB.catalogs
             }
         }
 
-        private bool AreNewRowsValid()
-        {
-            bool isOk = true;
-            foreach (DataGridViewRow row in modifiedRows)
-            {                
-                String actualIndex = row.Cells[4].Value.ToString();
-                if (!IsStringMatch(actualIndex) && !ContainEmptyColumn(row))
-                {
-                    row.Selected = true;
-                    isOk = false;
-                }
-            }
-            return isOk;
-        }
-
-        private bool ContainEmptyColumn(DataGridViewRow row)
-        {
-            return row.Cells[1].Value.ToString().Equals("") || row.Cells[2].Value.ToString().Equals("") ||
-                row.Cells[3].Value.ToString().Equals("") || row.Cells[4].Value.ToString().Equals("");
-        }
-
-        private bool IsStringMatch(String actualValue)
-        {
-            Regex regex = new Regex(@"^[1-9]{1}[0-9]{5}$");
-            return regex.IsMatch(actualValue);
-        }
-
-        private void CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView.Rows.Count > 0)
             {
@@ -172,12 +161,14 @@ namespace NonResidentialDB.catalogs
                         modifiedRows.Add(currentRow);
                     }
                 }
-            }          
+            }
         }
 
-        private void dataGridView_SelectionChanged(object sender, EventArgs e)
+        private void dataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            
+            MessageBox.Show("Несоответствие типов данных",
+                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            e.Cancel = true;
         }
     }
 }

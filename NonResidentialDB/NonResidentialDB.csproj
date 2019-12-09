@@ -53,6 +53,36 @@
     <Compile Include="catalogs\AuctionPlaceForm.Designer.cs">
       <DependentUpon>AuctionPlaceForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="catalogs\AuctionTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="catalogs\AuctionTypeForm.Designer.cs">
+      <DependentUpon>AuctionTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="catalogs\BuildingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="catalogs\BuildingForm.Designer.cs">
+      <DependentUpon>BuildingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="catalogs\BuyerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="catalogs\BuyerForm.Designer.cs">
+      <DependentUpon>BuyerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="catalogs\DeductionAmount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="catalogs\DeductionAmount.Designer.cs">
+      <DependentUpon>DeductionAmount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="catalogs\OrganizerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="catalogs\OrganizerForm.Designer.cs">
+      <DependentUpon>OrganizerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,6 +99,21 @@
     </Compile>
     <EmbeddedResource Include="catalogs\AuctionPlaceForm.resx">
       <DependentUpon>AuctionPlaceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="catalogs\AuctionTypeForm.resx">
+      <DependentUpon>AuctionTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="catalogs\BuildingForm.resx">
+      <DependentUpon>BuildingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="catalogs\BuyerForm.resx">
+      <DependentUpon>BuyerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="catalogs\DeductionAmount.resx">
+      <DependentUpon>DeductionAmount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="catalogs\OrganizerForm.resx">
+      <DependentUpon>OrganizerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
