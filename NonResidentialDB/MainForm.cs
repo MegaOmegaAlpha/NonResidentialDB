@@ -1,10 +1,12 @@
 ﻿using NonResidentialDB.catalogs;
+using NonResidentialDB.reports;
 using NonResidentialDB.utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
@@ -113,6 +115,19 @@ namespace NonResidentialDB
         private void buyerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new BuyerForm().Show();
+        }
+
+        private void simpleReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SimpleReport simpleReport = new SimpleReport();
+            simpleReport.ShowDialog();
+                            
+        }
+
+        private void advancedReportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AdvancedReportForm advancedReport = new AdvancedReportForm();
+            advancedReport.Show();
         }
     }
 }

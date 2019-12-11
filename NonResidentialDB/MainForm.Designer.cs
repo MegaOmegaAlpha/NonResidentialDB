@@ -30,18 +30,20 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.simpleReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.справочникиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.auctionType = new System.Windows.Forms.ToolStripMenuItem();
             this.auctionPlace = new System.Windows.Forms.ToolStripMenuItem();
             this.auctionOrganizer = new System.Windows.Forms.ToolStripMenuItem();
             this.building = new System.Windows.Forms.ToolStripMenuItem();
             this.размерОтчисленийToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buyerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.param_exec = new System.Windows.Forms.Button();
             this.cancel = new System.Windows.Forms.Button();
-            this.buyerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -60,9 +62,19 @@
             // 
             // menuToolStripMenuItem
             // 
+            this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.simpleReportToolStripMenuItem,
+            this.advancedReportToolStripMenuItem});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(53, 20);
             this.menuToolStripMenuItem.Text = "Меню";
+            // 
+            // simpleReportToolStripMenuItem
+            // 
+            this.simpleReportToolStripMenuItem.Name = "simpleReportToolStripMenuItem";
+            this.simpleReportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.simpleReportToolStripMenuItem.Text = "Простой отчет";
+            this.simpleReportToolStripMenuItem.Click += new System.EventHandler(this.simpleReportToolStripMenuItem_Click);
             // 
             // справочникиToolStripMenuItem
             // 
@@ -111,6 +123,13 @@
             this.размерОтчисленийToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.размерОтчисленийToolStripMenuItem.Text = "Размер отчислений";
             this.размерОтчисленийToolStripMenuItem.Click += new System.EventHandler(this.размерОтчисленийToolStripMenuItem_Click);
+            // 
+            // buyerToolStripMenuItem
+            // 
+            this.buyerToolStripMenuItem.Name = "buyerToolStripMenuItem";
+            this.buyerToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.buyerToolStripMenuItem.Text = "Покупатель";
+            this.buyerToolStripMenuItem.Click += new System.EventHandler(this.buyerToolStripMenuItem_Click);
             // 
             // dataGridView
             // 
@@ -162,12 +181,12 @@
             this.cancel.UseVisualStyleBackColor = true;
             this.cancel.Click += new System.EventHandler(this.cancel_Click);
             // 
-            // buyerToolStripMenuItem
+            // advancedReportToolStripMenuItem
             // 
-            this.buyerToolStripMenuItem.Name = "buyerToolStripMenuItem";
-            this.buyerToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.buyerToolStripMenuItem.Text = "Покупатель";
-            this.buyerToolStripMenuItem.Click += new System.EventHandler(this.buyerToolStripMenuItem_Click);
+            this.advancedReportToolStripMenuItem.Name = "advancedReportToolStripMenuItem";
+            this.advancedReportToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.advancedReportToolStripMenuItem.Text = "Непростой отчет";
+            this.advancedReportToolStripMenuItem.Click += new System.EventHandler(this.advancedReportToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -209,6 +228,8 @@
         private System.Windows.Forms.Button param_exec;
         private System.Windows.Forms.Button cancel;
         private System.Windows.Forms.ToolStripMenuItem buyerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem simpleReportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem advancedReportToolStripMenuItem;
     }
 }
 
